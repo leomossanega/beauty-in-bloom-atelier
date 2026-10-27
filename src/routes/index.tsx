@@ -383,7 +383,7 @@ function Index() {
             </div>
           )}
         </div>
-        <p className="mt-8 text-xs tracking-[0.2em] text-muted-foreground">
+        <p className="mt-8 text-xs tracking-[0.2em] text-foreground/70">
           © {new Date().getFullYear()} G&A STUDIO DE BELEZA · CAMPINAS
         </p>
       </footer>
