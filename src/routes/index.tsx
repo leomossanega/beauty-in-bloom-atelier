@@ -1,7 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import hero from "@/assets/hero.jpg";
-import logo from "@/assets/logo.jpg.asset.json";
+import logo from "@/assets/logo-transparent.png";
+import { Button } from "@/components/ui/button";
+import corteCover from "@/assets/servico-corte.jpg.asset.json";
+import escovaCover from "@/assets/servico-escova.jpg.asset.json";
+import mechasCover from "@/assets/servico-mechas.jpg.asset.json";
+import coloracaoCover from "@/assets/servico-coloracao.jpg.asset.json";
+import botoxCover from "@/assets/servico-botox.jpg.asset.json";
+import progressivaCover from "@/assets/servico-progressiva.jpg.asset.json";
+import penteadosCover from "@/assets/servico-penteados.jpg.asset.json";
+import manicureCover from "@/assets/servico-manicure.jpg.asset.json";
+import pedicureCover from "@/assets/servico-pedicure.jpg.asset.json";
 import mechas1 from "@/assets/mechas-1.jpg.asset.json";
 import mechas2 from "@/assets/mechas-2.jpg.asset.json";
 import mechas3 from "@/assets/mechas-3.jpg.asset.json";
@@ -51,17 +61,17 @@ const PHOTOS: Photo[] = [
   { src: coloracao1.url, alt: "Coloração castanha com reflexos acobreados", service: "Coloração", cat: "Cabelo" },
 ];
 
-type Service = { name: string; desc: string; cat: Cat };
+type Service = { name: string; desc: string; cat: Cat; cover?: string };
 const SERVICES: Service[] = [
-  { cat: "Cabelo", name: "Corte de cabelo", desc: "Um corte que valoriza seu estilo e combina com você." },
-  { cat: "Cabelo", name: "Escova", desc: "Finalização para realçar o movimento e a beleza dos cabelos." },
-  { cat: "Cabelo", name: "Mechas", desc: "Ilumine o visual e explore novas possibilidades para seus cabelos." },
-  { cat: "Cabelo", name: "Coloração", desc: "Renove a cor e descubra um visual alinhado à sua personalidade." },
-  { cat: "Cabelo", name: "Botox capilar", desc: "Consulte as opções de tratamento e os cuidados indicados para seus cabelos." },
-  { cat: "Cabelo", name: "Progressiva", desc: "Conheça as opções de alisamento e converse com o studio sobre os cuidados adequados." },
-  { cat: "Cabelo", name: "Penteados", desc: "Opções para diferentes ocasiões, estilos e momentos especiais." },
-  { cat: "Unhas", name: "Manicure", desc: "Um momento de cuidado para mãos bem cuidadas e um visual que combina com você." },
-  { cat: "Unhas", name: "Pedicure", desc: "Dedique um momento ao cuidado dos pés com um serviço pensado para você." },
+  { cat: "Cabelo", name: "Corte de cabelo", cover: corteCover.url, desc: "Um corte que valoriza seu estilo e combina com você." },
+  { cat: "Cabelo", name: "Escova", cover: escovaCover.url, desc: "Finalização para realçar o movimento e a beleza dos cabelos." },
+  { cat: "Cabelo", name: "Mechas", cover: mechasCover.url, desc: "Ilumine o visual e explore novas possibilidades para seus cabelos." },
+  { cat: "Cabelo", name: "Coloração", cover: coloracaoCover.url, desc: "Renove a cor e descubra um visual alinhado à sua personalidade." },
+  { cat: "Cabelo", name: "Botox capilar", cover: botoxCover.url, desc: "Consulte as opções de tratamento e os cuidados indicados para seus cabelos." },
+  { cat: "Cabelo", name: "Progressiva", cover: progressivaCover.url, desc: "Conheça as opções de alisamento e converse com o studio sobre os cuidados adequados." },
+  { cat: "Cabelo", name: "Penteados", cover: penteadosCover.url, desc: "Opções para diferentes ocasiões, estilos e momentos especiais." },
+  { cat: "Unhas", name: "Manicure", cover: manicureCover.url, desc: "Um momento de cuidado para mãos bem cuidadas e um visual que combina com você." },
+  { cat: "Unhas", name: "Pedicure", cover: pedicureCover.url, desc: "Dedique um momento ao cuidado dos pés com um serviço pensado para você." },
   { cat: "Sobrancelhas", name: "Design com linha", desc: "Cuidado e atenção aos detalhes para valorizar o desenho das sobrancelhas." },
   { cat: "Sobrancelhas", name: "Embelezamento de sobrancelhas", desc: "Um cuidado delicado para complementar seu visual." },
   { cat: "Maquiagem", name: "Maquiagem", desc: "Realce sua beleza e escolha um visual que combine com a ocasião." },
@@ -113,6 +123,24 @@ function Index() {
     return () => window.removeEventListener("keydown", k);
   }, []);
 
+  useEffect(() => {
+    const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    nodes.forEach((node) => {
+      node.classList.add("reveal-ready");
+      observer.observe(node);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   const gallery = filter === "Todos" ? PHOTOS : PHOTOS.filter((p) => p.cat === filter);
 
   return (
@@ -124,8 +152,8 @@ function Index() {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="#inicio" aria-label="G&A Studio de Beleza — início" className="block overflow-hidden rounded-sm bg-ink">
-            <img src={logo.url} alt="G&A Studio de Beleza" className="h-10 w-auto" />
+          <a href="#inicio" aria-label="G&A Studio de Beleza — início" className="block">
+            <img src={logo} alt="G&A Studio de Beleza" className="h-12 w-auto" />
           </a>
           <nav className="hidden items-center gap-8 md:flex">
             {NAV.map(([l, h]) => (
@@ -160,7 +188,7 @@ function Index() {
       <section id="inicio" className="relative flex min-h-[92svh] items-end overflow-hidden bg-card">
         <img src={hero} alt="Mulher com cabelos longos e brilhantes" className="hero-zoom absolute inset-0 h-full w-full object-cover object-[75%_center]" />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent md:bg-gradient-to-r md:from-card md:via-card/40 md:to-transparent" />
-        <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 md:pb-28">
+        <div className="hero-enter relative mx-auto w-full max-w-6xl px-5 pb-16 md:pb-28">
           <p className="eyebrow mb-4">Studio de Beleza · Campinas</p>
           <h1 className="max-w-xl text-5xl leading-[1.02] text-background md:text-7xl md:text-foreground">
             Sua beleza merece um momento só seu.
@@ -180,12 +208,8 @@ function Index() {
       </section>
 
       {/* Sobre */}
-      <section id="sobre" className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-24 md:grid-cols-2">
-        <div className="grid grid-cols-2 gap-3">
-          <img src={mechas1.url} alt="Ambiente do G&A com parede verde" className="aspect-[3/4] w-full object-cover" loading="lazy" />
-          <img src={coloracao1.url} alt="Resultado de coloração no studio" className="mt-12 aspect-[3/4] w-full object-cover" loading="lazy" />
-        </div>
-        <div>
+      <section id="sobre" className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+        <div data-reveal className="mx-auto max-w-3xl text-center">
           <p className="eyebrow mb-4">O studio</p>
           <h2 className="text-4xl leading-tight md:text-5xl">Beleza, cuidado e atenção em cada detalhe.</h2>
           <p className="mt-6 font-light leading-relaxed text-muted-foreground">
@@ -198,37 +222,34 @@ function Index() {
       {/* Serviços */}
       <section id="servicos" className="bg-card py-24">
         <div className="mx-auto max-w-6xl px-5">
-          <div className="mb-14 text-center">
+          <div data-reveal className="mb-14 text-center">
             <p className="eyebrow mb-3">O que fazemos</p>
             <h2 className="text-4xl md:text-5xl">Serviços</h2>
           </div>
           {(["Cabelo", "Unhas", "Sobrancelhas", "Maquiagem"] as Cat[]).map((cat) => (
             <div key={cat} className="mb-14 last:mb-0">
-              <div className="mb-6 flex items-center gap-4">
+              <div data-reveal className="mb-6 flex items-center gap-4">
                 <h3 className="text-2xl italic">{cat}</h3>
                 <span className="h-px flex-1 bg-gold/50" />
               </div>
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {SERVICES.filter((s) => s.cat === cat).map((s) => {
-                  const ph = photosFor(s.name);
+                {SERVICES.filter((s) => s.cat === cat).map((s, index) => {
                   return (
-                    <button
+                    <Button
+                      variant="ghost"
+                      data-reveal
+                      data-reveal-delay={index % 4}
                       key={s.name}
                       onClick={() => setSelected(s)}
-                      className="group flex flex-col bg-background text-left transition hover:-translate-y-1"
+                      className="group h-auto w-full flex-col items-stretch justify-start whitespace-normal rounded-none bg-background p-0 text-left font-normal transition hover:-translate-y-1 hover:bg-background"
                     >
                       <div className="relative aspect-[4/5] w-full overflow-hidden bg-secondary">
-                        {ph[0] ? (
-                          <img src={ph[0].src} alt={ph[0].alt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                        {s.cover ? (
+                          <img src={s.cover} alt={s.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                         ) : (
                           <div className="flex h-full items-center justify-center font-serif text-6xl italic text-rose/60">
                             {s.name[0]}
                           </div>
-                        )}
-                        {ph.length > 0 && (
-                          <span className="absolute left-2 top-2 bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.15em]">
-                            {ph.length} {ph.length > 1 ? "fotos reais" : "foto real"}
-                          </span>
                         )}
                       </div>
                       <div className="flex flex-1 flex-col p-4">
@@ -236,7 +257,7 @@ function Index() {
                         <span className="mt-2 line-clamp-3 text-xs font-light text-muted-foreground">{s.desc}</span>
                         <span className="mt-auto pt-4 text-[10px] uppercase tracking-[0.2em] text-rose">Saiba mais</span>
                       </div>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -247,7 +268,7 @@ function Index() {
 
       {/* Portfólio */}
       <section id="portfolio" className="mx-auto max-w-6xl px-5 py-24">
-        <div className="mb-10 text-center">
+        <div data-reveal className="mb-10 text-center">
           <p className="eyebrow mb-3">Portfólio</p>
           <h2 className="text-4xl md:text-5xl">Detalhes que fazem a diferença.</h2>
           <p className="mx-auto mt-4 max-w-md font-light text-muted-foreground">
@@ -286,7 +307,7 @@ function Index() {
 
       {/* Contato */}
       <section id="contato" className="bg-secondary py-24">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 md:grid-cols-2">
+        <div data-reveal className="mx-auto grid max-w-6xl gap-12 px-5 md:grid-cols-2">
           <div>
             <p className="eyebrow mb-4">Contato</p>
             <h2 className="text-4xl leading-tight md:text-5xl">Vamos encontrar o cuidado ideal para você?</h2>
@@ -325,7 +346,7 @@ function Index() {
       </section>
 
       <footer className="bg-ink py-12 text-center text-ink-foreground">
-        <img src={logo.url} alt="G&A Studio de Beleza" className="mx-auto h-20 w-auto" />
+        <img src={logo} alt="G&A Studio de Beleza" className="mx-auto h-auto w-64 max-w-[75%]" />
         <p className="mt-4 text-xs tracking-[0.2em]">© {new Date().getFullYear()} G&A STUDIO DE BELEZA · CAMPINAS</p>
       </footer>
 
