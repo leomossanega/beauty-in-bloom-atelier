@@ -377,7 +377,7 @@ function Index() {
               <span className="text-xs uppercase tracking-[0.2em]">{INSTAGRAM_HANDLE || "Instagram"}</span>
             </a>
           ) : (
-            <div className="inline-flex items-center gap-3 border border-dashed border-foreground/30 px-6 py-3 text-foreground/70">
+            <div className="inline-flex items-center gap-3 border border-dashed border-foreground/45 px-6 py-3 text-foreground">
               <InstagramIcon className="h-4 w-4" />
               <span className="text-xs uppercase tracking-[0.2em]">Instagram · em breve</span>
             </div>
