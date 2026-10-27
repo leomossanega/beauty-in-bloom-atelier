@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import corteCover from "@/assets/servico-corte.jpg.asset.json";
 import escovaCover from "@/assets/servico-escova.jpg.asset.json";
 import mechasCover from "@/assets/servico-mechas.jpg.asset.json";
-import coloracaoCover from "@/assets/servico-coloracao.jpg.asset.json";
+import coloracaoCover from "@/assets/servico-coloracao-nova.jpg.asset.json";
+import designCover from "@/assets/servico-design-linha.jpg.asset.json";
+import sobrancelhasCover from "@/assets/servico-sobrancelhas.jpg.asset.json";
+import maquiagemCover from "@/assets/servico-maquiagem.jpg.asset.json";
 import botoxCover from "@/assets/servico-botox.jpg.asset.json";
 import progressivaCover from "@/assets/servico-progressiva.jpg.asset.json";
 import penteadosCover from "@/assets/servico-penteados.jpg.asset.json";
@@ -72,9 +75,9 @@ const SERVICES: Service[] = [
   { cat: "Cabelo", name: "Penteados", cover: penteadosCover.url, desc: "Opções para diferentes ocasiões, estilos e momentos especiais." },
   { cat: "Unhas", name: "Manicure", cover: manicureCover.url, desc: "Um momento de cuidado para mãos bem cuidadas e um visual que combina com você." },
   { cat: "Unhas", name: "Pedicure", cover: pedicureCover.url, desc: "Dedique um momento ao cuidado dos pés com um serviço pensado para você." },
-  { cat: "Sobrancelhas", name: "Design com linha", desc: "Cuidado e atenção aos detalhes para valorizar o desenho das sobrancelhas." },
-  { cat: "Sobrancelhas", name: "Embelezamento de sobrancelhas", desc: "Um cuidado delicado para complementar seu visual." },
-  { cat: "Maquiagem", name: "Maquiagem", desc: "Realce sua beleza e escolha um visual que combine com a ocasião." },
+  { cat: "Sobrancelhas", name: "Design com linha", cover: designCover.url, desc: "Cuidado e atenção aos detalhes para valorizar o desenho das sobrancelhas." },
+  { cat: "Sobrancelhas", name: "Embelezamento de sobrancelhas", cover: sobrancelhasCover.url, desc: "Um cuidado delicado para complementar seu visual." },
+  { cat: "Maquiagem", name: "Maquiagem", cover: maquiagemCover.url, desc: "Realce sua beleza e escolha um visual que combine com a ocasião." },
 ];
 
 const HOURS = [
@@ -197,10 +200,10 @@ function Index() {
             Cuidado, estilo e beleza em um só lugar. Descubra os serviços do G&A e encontre o cuidado ideal para você.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
-            <a href="#servicos" className="bg-primary px-7 py-4 text-xs uppercase tracking-[0.22em] text-primary-foreground transition hover:bg-rose">
+            <a data-reveal data-reveal-delay="2" href="#servicos" className="bg-primary px-7 py-4 text-xs uppercase tracking-[0.22em] text-primary-foreground transition hover:bg-rose">
               Conheça nossos serviços
             </a>
-            <a href="#portfolio" className="border-b border-current pb-1 text-xs uppercase tracking-[0.22em] text-background md:text-foreground">
+            <a data-reveal data-reveal-delay="3" href="#portfolio" className="border-b border-current pb-1 text-xs uppercase tracking-[0.22em] text-background md:text-foreground">
               Ver portfólio
             </a>
           </div>
