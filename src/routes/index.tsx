@@ -100,6 +100,21 @@ const NAV = [
 
 const photosFor = (s: string) => PHOTOS.filter((p) => p.service === s);
 
+// Espaço reservado para o Instagram: cole aqui o link do perfil quando ele existir.
+// Ex.: const INSTAGRAM_URL = "https://instagram.com/ga.studiodebeleza";
+const INSTAGRAM_URL = "";
+const INSTAGRAM_HANDLE = "";
+
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -348,9 +363,29 @@ function Index() {
         </div>
       </section>
 
-      <footer className="bg-ink py-12 text-center text-ink-foreground">
+      <footer className="border-t border-border bg-background py-14 text-center text-foreground">
         <img src={logo} alt="G&A Studio de Beleza" className="mx-auto h-auto w-64 max-w-[75%]" />
-        <p className="mt-4 text-xs tracking-[0.2em]">© {new Date().getFullYear()} G&A STUDIO DE BELEZA · CAMPINAS</p>
+        <div data-reveal className="mt-8 flex justify-center">
+          {INSTAGRAM_URL ? (
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-3 border border-border px-6 py-3 transition hover:border-foreground"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              <span className="text-xs uppercase tracking-[0.2em]">{INSTAGRAM_HANDLE || "Instagram"}</span>
+            </a>
+          ) : (
+            <div className="inline-flex items-center gap-3 border border-dashed border-border px-6 py-3 text-muted-foreground">
+              <InstagramIcon className="h-4 w-4" />
+              <span className="text-xs uppercase tracking-[0.2em]">Instagram · em breve</span>
+            </div>
+          )}
+        </div>
+        <p className="mt-8 text-xs tracking-[0.2em] text-muted-foreground">
+          © {new Date().getFullYear()} G&A STUDIO DE BELEZA · CAMPINAS
+        </p>
       </footer>
 
       {/* Floating WhatsApp */}
